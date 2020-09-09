@@ -8,12 +8,10 @@ namespace Millionaire_Game
     {
         internal void Again()
         {
-            InsideMap map = new InsideMap();
-            string from = map.TryAgain;
             Console.WriteLine(" ");
-            Console.WriteLine("Хотите попробовать еще раз? <да> | <нет>");
+            Console.WriteLine("Вы можете загрузить сохраненную игру, начать новую игру или выйти из игры.\n <Загрузить> | <Новая> | <Выйти>");
             UserInput input = new UserInput();
-            input.ReceiveInput(from);
+            input.ReceiveInput(InsideMap.TryAgain);
         }
     }
 }

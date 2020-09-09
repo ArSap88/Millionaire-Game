@@ -8,15 +8,17 @@ namespace Millionaire_Game
         {
             Console.InputEncoding = System.Text.Encoding.Unicode;
             Console.OutputEncoding = System.Text.Encoding.Unicode;
-            Console.WriteLine("Добро пожаловать в игру: <Кто хочет стать миллионером?>");
-            Console.WriteLine(" ");
-            Console.WriteLine("Наберите текст в <...>:");
-            Console.WriteLine("<правила> - прочитать правила игры");
-            Console.WriteLine("<начать> - начать игру");
-            InsideMap map = new InsideMap();
-            string from = map.FromMain;
-            UserInput input = new UserInput();
-            input.ReceiveInput(from);
+            Console.WriteLine("\tДобро пожаловать в игру: <Кто хочет стать миллионером?>\n " +
+                " ");            
+            Console.WriteLine("Пожалуйста, введите имя:");
+            string userName = Console.ReadLine();
+            UserInputCheck nameChk = new UserInputCheck();
+            nameChk.WordCheck(userName, InsideMap.FromMain);
+            if (!UserInputCheck.Quit)
+            {
+                MainGame start = new MainGame();
+                start.GameInit(userName);
+            }                        
         }
     }
 }

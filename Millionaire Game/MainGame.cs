@@ -7,22 +7,31 @@ namespace Millionaire_Game
 {
     class MainGame
     {
-        internal void GameEngine(Question q1, Question q2, Question q3, Question q4, Question q5)
+        internal void GameInit(string userName)
+        {
+            Console.WriteLine(" ");
+            Console.WriteLine("Привет, {0}", userName);
+            Console.WriteLine("Хотите прочитать правила игры?\n <Да> | <Нет>");
+            UserInput showRules = new UserInput();
+            showRules.ReceiveInput(InsideMap.FromGameInit);
+            int initialScore = 50;
+            int initialQuestion = 0;
+            GameEngine(userName, initialScore, initialQuestion);
+        }
+        internal void GameEngine(string userName, int userScore, int qNumber)
         {            
             Player user = new Player();
-            user.PlayerName();            
+            user.Name = userName;
+            user.Score = userScore;
             Console.WriteLine(" ");
-            Console.WriteLine("Привет, {0}", user.Name);            
-            Question[] arr = new Question[5] { q1, q2, q3, q4, q5 };
-            UserInput input = new UserInput();            
-            InsideMap map = new InsideMap();            
-            GameOver gameOver = new GameOver();
-            Goodbye bye = new Goodbye();
-            Winner winner = new Winner();
+            Console.WriteLine("Ну что, {0}, готовы начать?\nИтак:", user.Name);
+            Database qBlock = new Database();
+            qBlock.QandA();
+            Question[] arr = new Question[5] { qBlock.Question1, qBlock.Question2, qBlock.Question3, qBlock.Question4, qBlock.Question5 };
+            UserInput input = new UserInput();
             TryAgain again = new TryAgain();
             Answer userChoice;
-            string from = map.FromGameEngine;
-            for (int i = 0; i < arr.Length; i++)
+            for (int i = qNumber; i < arr.Length; i++)
             {                
                 Console.WriteLine(" ");
                 Console.WriteLine(arr[i].QText);
@@ -32,8 +41,8 @@ namespace Millionaire_Game
                 Console.WriteLine("3. " + arr[i].Answers[2].AText);
                 Console.WriteLine("4. " + arr[i].Answers[3].AText);
                 Console.WriteLine(" ");                
-                string userAnswer = input.ReceiveInput(from);
-                if (userAnswer == map.AnswerOne)
+                string userAnswer = input.ReceiveInput(InsideMap.FromGameEngine);
+                if (userAnswer == InsideMap.AnswerOne)
                 {
                     userChoice = arr[i].Answers[0];
                     userChoice.Choice();
@@ -43,22 +52,19 @@ namespace Millionaire_Game
                         if (i == arr.Length - 1)
                         {
                             Console.WriteLine("Поздравляем, Вы ответили на все вопросы!");
-                            winner.YouWin(user.Score);
-                            bye.Bye();
+                            user.PlayerWin();                            
                             break;
                         }
-                        Console.WriteLine("Ваш выигрыш: {0}", user.Score);
-                        Console.WriteLine(" ");
+                        Console.WriteLine("Ваш выигрыш: {0}", user.Score);                        
                     }
                     else
                     {
-                        user.ScoreZero();
-                        gameOver.UserLost(user.Score);
+                        user.ScoreZero(InsideMap.UserLost);
                         again.Again();
                         break;
                     }
                 }
-                else if (userAnswer == map.AnswerTwo)
+                else if (userAnswer == InsideMap.AnswerTwo)
                 {
                     userChoice = arr[i].Answers[1];
                     userChoice.Choice();
@@ -68,22 +74,19 @@ namespace Millionaire_Game
                         if (i == arr.Length - 1)
                         {
                             Console.WriteLine("Поздравляем, Вы ответили на все вопросы!");
-                            winner.YouWin(user.Score);
-                            bye.Bye();
+                            user.PlayerWin();                            
                             break;
                         }
-                        Console.WriteLine("Ваш выигрыш: {0}", user.Score);
-                        Console.WriteLine(" ");
+                        Console.WriteLine("Ваш выигрыш: {0}", user.Score);                        
                     }
                     else
                     {
-                        user.ScoreZero();
-                        gameOver.UserLost(user.Score);
+                        user.ScoreZero(InsideMap.UserLost);
                         again.Again();
                         break;
                     }
                 }
-                else if (userAnswer == map.AnswerThree)
+                else if (userAnswer == InsideMap.AnswerThree)
                 {
                     userChoice = arr[i].Answers[2];
                     userChoice.Choice();
@@ -93,22 +96,19 @@ namespace Millionaire_Game
                         if (i == arr.Length - 1)
                         {
                             Console.WriteLine("Поздравляем, Вы ответили на все вопросы!");
-                            winner.YouWin(user.Score);
-                            bye.Bye();
+                            user.PlayerWin();                            
                             break;
                         }
-                        Console.WriteLine("Ваш выигрыш: {0}", user.Score);
-                        Console.WriteLine(" ");
+                        Console.WriteLine("Ваш выигрыш: {0}", user.Score);                        
                     }
                     else
                     {
-                        user.ScoreZero();
-                        gameOver.UserLost(user.Score);
+                        user.ScoreZero(InsideMap.UserLost);                        
                         again.Again();
                         break;
                     }
                 }
-                else if (userAnswer == map.AnswerFour)
+                else if (userAnswer == InsideMap.AnswerFour)
                 {
                     userChoice = arr[i].Answers[3];
                     userChoice.Choice();
@@ -118,32 +118,34 @@ namespace Millionaire_Game
                         if (i == arr.Length - 1)
                         {
                             Console.WriteLine("Поздравляем, Вы ответили на все вопросы!");
-                            winner.YouWin(user.Score);
-                            bye.Bye();
+                            user.PlayerWin();                            
                             break;
                         }
-                        Console.WriteLine("Ваш выигрыш: {0}", user.Score);
-                        Console.WriteLine(" ");
+                        Console.WriteLine("Ваш выигрыш: {0}", user.Score);                        
                     }
                     else
                     {
-                        user.ScoreZero();
-                        gameOver.UserLost(user.Score);
+                        user.ScoreZero(InsideMap.UserLost);                        
                         again.Again();
                         break;
                     }
                 }
-                else if (userAnswer == map.Money)
+                else if (string.Equals(userAnswer, InsideMap.Money, StringComparison.OrdinalIgnoreCase))
                 {
                     if (i == 0)
                     {
-                        user.ScoreZero();
+                        user.ScoreZero(InsideMap.Money);
                     }
-                    Console.WriteLine("Вы выиграли {0}", user.Score);
-                    bye.Bye();
+                    user.PlayerWin();                    
                     break;
                 }
+                else if (string.Equals(userAnswer, InsideMap.SaveGame, StringComparison.OrdinalIgnoreCase))
+                {
+                    Save save = new Save();
+                    save.SaveFile(user.Name, user.Score, i);
+                    i--;
+                }
             }
-        }        
+        }
     }
 }

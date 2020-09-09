@@ -6,6 +6,12 @@ namespace Millionaire_Game
 {
     class Database
     {
+        internal Question Question1 { get; private set; }
+        internal Question Question2 { get; private set; }
+        internal Question Question3 { get; private set; }
+        internal Question Question4 { get; private set; }
+        internal Question Question5 { get; private set; }
+
         internal void QandA()
         {
             Question Q1 = new Question("Первый вопрос?");
@@ -38,8 +44,12 @@ namespace Millionaire_Game
             Q5.Answers[1] = new AnswerCorrect("Правильно");
             Q5.Answers[2] = new AnswerWrong("Неправильно");
             Q5.Answers[3] = new AnswerWrong("Неправильно");
-            MainGame gameStart = new MainGame();
-            gameStart.GameEngine(Q1, Q2, Q3, Q4, Q5);
+
+            Question1 = Q1;
+            Question2 = Q2;
+            Question3 = Q3;
+            Question4 = Q4;
+            Question5 = Q5;
         }
     }
 }

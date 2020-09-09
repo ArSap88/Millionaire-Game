@@ -5,67 +5,106 @@ using System.Text;
 namespace Millionaire_Game
 {
     class UserInputCheck
-    {        
-        internal void WordCheck(string word, string fromwhere)
+    {
+        private string Error;
+        internal static bool Quit { get; private set; } = false;
+        internal void WordCheck(string word, string from)
         {
-            InsideMap map = new InsideMap();            
-            UserInput newinput = new UserInput();
-            Database newGame = new Database();
-            string error;
-            if (fromwhere == map.FromMain)
+            if (from == InsideMap.FromMain)
+            {                
+                Load askUser = new Load();
+                askUser.AskToLoad(word);                
+            }
+            else if (from == InsideMap.FromGameInit)
+            {
+                FromGameInit(word);
+            }
+            else if (from == InsideMap.FromGameEngine)
+            {
+                FromGameEngine(word);
+            }
+            else if (from == InsideMap.TryAgain)
+            {
+                FromTryAgain(word);
+            }
+            else if (from == InsideMap.AskToLoad)
+            {
+                FromLoad(word, Load.UserFileName);
+            }            
+        }
+        private void FromGameInit(string userInput)
+        {
+            if (string.Equals(userInput, InsideMap.Yes, StringComparison.OrdinalIgnoreCase))
             {
                 Rules rules = new Rules();
-                if (string.Equals(word, map.ShowRules, StringComparison.OrdinalIgnoreCase))
-                {
-                    rules.ShowRules();
-                    newGame.QandA();
-                }
-                else if (string.Equals(word, map.BeginGame, StringComparison.OrdinalIgnoreCase))
-                {
-                    newGame.QandA();
-                }
-                else
-                {
-                    error = map.FromMain;
-                    Console.WriteLine("Возможно Вы ошиблись. Пожалуйста, повторите ввод:");
-                    newinput.ReceiveInput(error);
-                }
+                rules.ShowRules();
             }
-            else if (fromwhere == map.FromGameEngine)
-            {                
-                if (string.Equals(word, map.AnswerOne, StringComparison.Ordinal) 
-                    || string.Equals(word, map.AnswerTwo, StringComparison.Ordinal)
-                    || string.Equals(word, map.AnswerThree, StringComparison.Ordinal)
-                    || string.Equals(word, map.AnswerFour, StringComparison.Ordinal)
-                    || string.Equals(word, map.Money, StringComparison.OrdinalIgnoreCase))
-                {
-                    //Code here is not needed. Program just returns back. This part could be optimized with "!=", but I don't know how to use "!=" with "string.Equals..."
-                }
-                else
-                {
-                    error = map.FromGameEngine;
-                    Console.WriteLine("Возможно Вы ошиблись. Пожалуйста, повторите ввод:");
-                    newinput.ReceiveInput(error);
-                }
-            }            
-            else if (fromwhere == map.TryAgain)
+            else if (string.Equals(userInput, InsideMap.No, StringComparison.OrdinalIgnoreCase))
             {
-                if (word == map.TryAgainYes)
-                {
-                    Program.Main();
-                }
-                else if (word == map.TryAgainNo)
-                {
-                    Goodbye bye = new Goodbye();
-                    bye.Bye();
-                }
-                else
-                {
-                    error = map.TryAgain;
-                    Console.WriteLine("Возможно Вы ошиблись. Пожалуйста, повторите ввод:");
-                    newinput.ReceiveInput(error);
-                }
+                //return and continue game
+            }            
+            else
+            {
+                UserInput newinput = new UserInput();
+                Error = InsideMap.FromGameInit;
+                Console.WriteLine("Возможно Вы ошиблись. Пожалуйста, повторите ввод:");
+                newinput.ReceiveInput(Error);
             }
         }
-    }
+        private void FromGameEngine(string userInput)
+        {
+            if (string.Equals(userInput, InsideMap.AnswerOne, StringComparison.Ordinal)
+                    || string.Equals(userInput, InsideMap.AnswerTwo, StringComparison.Ordinal)
+                    || string.Equals(userInput, InsideMap.AnswerThree, StringComparison.Ordinal)
+                    || string.Equals(userInput, InsideMap.AnswerFour, StringComparison.Ordinal)
+                    || string.Equals(userInput, InsideMap.Money, StringComparison.OrdinalIgnoreCase)
+                    || string.Equals(userInput, InsideMap.SaveGame, StringComparison.OrdinalIgnoreCase))
+            {
+                
+            }
+            else
+            {
+                UserInput newinput = new UserInput();
+                Error = InsideMap.FromGameEngine;
+                Console.WriteLine("Возможно Вы ошиблись. Пожалуйста, повторите ввод:");
+                newinput.ReceiveInput(Error);
+            }
+        }
+        private void FromTryAgain(string userInput)
+        {
+            if (string.Equals(userInput, InsideMap.TryAgainNewGame, StringComparison.OrdinalIgnoreCase))
+            {
+                Program.Main();
+            }
+            else if (string.Equals(userInput, InsideMap.LoadGame, StringComparison.OrdinalIgnoreCase))
+            {
+                Load loadFile = new Load();
+                loadFile.AskFileName();
+            }
+            else if (string.Equals(userInput, InsideMap.Quit, StringComparison.OrdinalIgnoreCase))
+            {
+                Quit = true;
+            }
+            else
+            {
+                UserInput newinput = new UserInput();
+                Error = InsideMap.TryAgain;
+                Console.WriteLine("Возможно Вы ошиблись. Пожалуйста, повторите ввод:");
+                newinput.ReceiveInput(Error);
+            }
+        }
+        private void FromLoad(string userInput, string userName)
+        {
+            if (string.Equals(userInput, InsideMap.Yes, StringComparison.OrdinalIgnoreCase))
+            {
+                Load load = new Load();
+                load.LoadGame(userName);
+            }
+            if (string.Equals(userInput, InsideMap.No, StringComparison.OrdinalIgnoreCase))
+            {
+                MainGame start = new MainGame();
+                start.GameInit(userName);
+            }
+        }
+    }    
 }
