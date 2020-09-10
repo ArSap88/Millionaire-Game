@@ -7,7 +7,7 @@ namespace Millionaire_Game
 {    
     class Load
     {
-        private const string SaveLocation = @"C:\Games\Millionaire";
+        private const string LoadLocation = @"C:\Games\Millionaire";
         internal static string UserFileName { get; private set; }
         private int Count = 4;
         internal void AskFileName()
@@ -18,8 +18,8 @@ namespace Millionaire_Game
             LoadGame(fileName);
         }
         internal void LoadGame(string fileName)
-        {            
-            string filePath = SaveLocation + @"\" + fileName + ".mil";
+        {
+            string filePath = Path.Combine(LoadLocation, fileName, ".mil");//LoadLocation + @"\" + fileName + ".mil";
             FileInfo dataFile = new FileInfo(filePath);            
             if (!dataFile.Exists)
             {                
@@ -28,7 +28,7 @@ namespace Millionaire_Game
                     if (Count == 1)
                     {
                         Console.WriteLine(" ");
-                        Console.WriteLine("Проверьте свои сохраненные игры в {0}. Игра закрывается.", SaveLocation);
+                        Console.WriteLine("Проверьте свои сохраненные игры в {0}. Игра закрывается.", LoadLocation);
                         break;
                     }
                     Console.WriteLine(" ");
@@ -37,19 +37,24 @@ namespace Millionaire_Game
                     AskFileName();
                 }                
             }
-            FileStream loadDataStream = dataFile.OpenRead();
-            StreamReader myStream = new StreamReader(loadDataStream, Encoding.Default);
-            string userName = myStream.ReadLine();
-            string userScore = myStream.ReadLine();
-            string lastQuestion = myStream.ReadLine();
-            int score = Convert.ToInt32(userScore);
-            int qNum = Convert.ToInt32(lastQuestion);
+            //FileStream loadDataStream = dataFile.OpenRead();
+            //StreamReader myStream = new StreamReader(loadDataStream, Encoding.Default);
+            //string userName = myStream.ReadLine();
+            //string userScore = myStream.ReadLine();
+            //string lastQuestion = myStream.ReadLine();
+            //int score = Convert.ToInt32(userScore);
+            //int qNum = Convert.ToInt32(lastQuestion);
+            string[] userData = new string[3];
+            userData = File.ReadAllLines(filePath, Encoding.Default);
+            string userName = userData[0];
+            int score = Convert.ToInt32(userData[1]);
+            int qNum = Convert.ToInt32(userData[2]);
             MainGame continueGame = new MainGame();
             continueGame.GameEngine(userName, score, qNum);
         }
         internal void AskToLoad(string userName)
         {
-            string filePath = SaveLocation + @"\" + userName + ".mil";
+            string filePath = LoadLocation + @"\" + userName + ".mil";
             FileInfo dataFile = new FileInfo(filePath);
             if (dataFile.Exists)
             {
