@@ -6,12 +6,10 @@ using System.IO;
 namespace Millionaire_Game
 {
     class Save
-    {
-        private const string SaveLocation = @"C:\Games\Millionaire";
-        internal void SaveFile(string userName, int userScore, int lastQuestionNumber)
-        {
-            Directory.CreateDirectory(SaveLocation);
-            string savePath = SaveLocation + @"\" + userName + ".mil";
+    {        
+        internal void SaveFile(string userName)
+        {            
+            string savePath = MainGame.SaveLocation + @"\" + userName + ".mil";
             FileInfo userSave = new FileInfo(savePath);
             if (userSave.Exists)
             {                
@@ -19,10 +17,11 @@ namespace Millionaire_Game
             }
             FileStream saveDataStream = userSave.OpenWrite();
             StreamWriter myStream = new StreamWriter(saveDataStream, Encoding.Default);
-            myStream.WriteLine(userName);
-            myStream.WriteLine(userScore);
-            myStream.WriteLine(lastQuestionNumber);
-            myStream.Dispose();            
+            myStream.WriteLine(Player.UserData[0]);
+            myStream.WriteLine(Player.UserData[1]);
+            myStream.WriteLine(Player.UserData[2]);
+            myStream.Dispose();
+            //File.WriteAllLines(savePath, Player.UserData, Encoding.Default);
         }
     }
 }

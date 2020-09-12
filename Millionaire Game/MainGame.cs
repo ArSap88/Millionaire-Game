@@ -1,16 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Text;
 
 namespace Millionaire_Game
 {
     class MainGame
     {
+        internal static string SaveLocation = @"C:\Games\Millionaire";
         internal void GameInit(string userName)
         {
-            Console.WriteLine(" ");
-            Console.WriteLine("Привет, {0}", userName);
+            Console.WriteLine(" ");            
             Console.WriteLine("Хотите прочитать правила игры?\n <Да> | <Нет>");
             UserInput showRules = new UserInput();
             showRules.ReceiveInput(InsideMap.FromGameInit);
@@ -141,9 +138,11 @@ namespace Millionaire_Game
                 }
                 else if (string.Equals(userAnswer, InsideMap.SaveGame, StringComparison.OrdinalIgnoreCase))
                 {
+                    user.FillUserDataArray(user.Name, user.Score, i);
                     Save save = new Save();
-                    save.SaveFile(user.Name, user.Score, i);
+                    save.SaveFile(user.Name);
                     i--;
+                    Console.WriteLine("Игра сохранена.\n Возвращаемся к последнему вопросу:");
                 }
             }
         }

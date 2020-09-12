@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Millionaire_Game
 {
@@ -9,13 +7,8 @@ namespace Millionaire_Game
         private string Error;
         internal static bool Quit { get; private set; } = false;
         internal void WordCheck(string word, string from)
-        {
-            if (from == InsideMap.FromMain)
-            {                
-                Load askUser = new Load();
-                askUser.AskToLoad(word);                
-            }
-            else if (from == InsideMap.FromGameInit)
+        {            
+            if (from == InsideMap.FromGameInit)
             {
                 FromGameInit(word);
             }
@@ -31,6 +24,26 @@ namespace Millionaire_Game
             {
                 FromLoad(word, Load.UserFileName);
             }            
+        }
+        internal void WordCheck(string word, string from, string userName)
+        {
+            if (from == InsideMap.FromMain)
+            {
+                FromMain(word, userName);
+            }
+        }
+        private void FromMain(string userInput, string userName)
+        {
+            if (string.Equals(userInput, InsideMap.NewGame, StringComparison.OrdinalIgnoreCase))
+            {
+                MainGame startNew = new MainGame();
+                startNew.GameInit(userName);
+            }
+            else if (string.Equals(userInput, InsideMap.LoadGame, StringComparison.OrdinalIgnoreCase))
+            {
+                Load loadGame = new Load();
+                loadGame.AskToLoad();
+            }
         }
         private void FromGameInit(string userInput)
         {
@@ -60,7 +73,7 @@ namespace Millionaire_Game
                     || string.Equals(userInput, InsideMap.Money, StringComparison.OrdinalIgnoreCase)
                     || string.Equals(userInput, InsideMap.SaveGame, StringComparison.OrdinalIgnoreCase))
             {
-                
+                //Just returns back
             }
             else
             {
@@ -72,14 +85,14 @@ namespace Millionaire_Game
         }
         private void FromTryAgain(string userInput)
         {
-            if (string.Equals(userInput, InsideMap.TryAgainNewGame, StringComparison.OrdinalIgnoreCase))
+            if (string.Equals(userInput, InsideMap.NewGame, StringComparison.OrdinalIgnoreCase))
             {
                 Program.Main();
             }
             else if (string.Equals(userInput, InsideMap.LoadGame, StringComparison.OrdinalIgnoreCase))
             {
                 Load loadFile = new Load();
-                loadFile.AskFileName();
+                loadFile.AskToLoad();
             }
             else if (string.Equals(userInput, InsideMap.Quit, StringComparison.OrdinalIgnoreCase))
             {

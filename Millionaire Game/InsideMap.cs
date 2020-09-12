@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Millionaire_Game
+﻿namespace Millionaire_Game
 {
     static class InsideMap
     {
@@ -19,7 +15,7 @@ namespace Millionaire_Game
         internal static string Load { get; } = "Load";
         internal static string SaveGame { get; } = "Сохранить";
         internal static string LoadGame { get; } = "Загрузить";
-        internal static string TryAgainNewGame { get; } = "Новая";
+        internal static string NewGame { get; } = "Новая";
         internal static string Quit { get; } = "Выйти";
         internal static string UserLost { get; } = "gameover";
         internal static string Yes { get; } = "Да";
