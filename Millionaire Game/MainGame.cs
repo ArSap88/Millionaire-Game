@@ -5,23 +5,32 @@ namespace Millionaire_Game
     class MainGame
     {
         internal static string SaveLocation = @"C:\Games\Millionaire";
+        internal static int QuestionNumber { get; private set; }
         internal void GameInit(string userName)
         {
             Console.WriteLine(" ");            
             Console.WriteLine("Хотите прочитать правила игры?\n <Да> | <Нет>");
             UserInput showRules = new UserInput();
-            showRules.ReceiveInput(InsideMap.FromGameInit);
-            int initialScore = 50;
+            showRules.ReceiveInput(InsideMap.FromGameInit);            
             int initialQuestion = 0;
-            GameEngine(userName, initialScore, initialQuestion);
+            GameEngine(userName, initialQuestion);
         }
-        internal void GameEngine(string userName, int userScore, int qNumber)
+        internal void GameEngine(string userName, int qNumber)
         {            
             Player user = new Player();
-            user.Name = userName;
-            user.Score = userScore;
+            Player.Name = userName;
+            user.Score = 50;
+            if (qNumber > 0)
+            {
+                int smth = 1;
+                while (smth < qNumber)
+                {
+                    user.ScoreMult();
+                    smth++;
+                }
+            }
             Console.WriteLine(" ");
-            Console.WriteLine("Ну что, {0}, готовы начать?\nИтак:", user.Name);
+            Console.WriteLine("Ну что, {0}, готовы начать?\n Итак:", Player.Name);
             Database qBlock = new Database();
             qBlock.QandA();
             Question[] arr = new Question[5] { qBlock.Question1, qBlock.Question2, qBlock.Question3, qBlock.Question4, qBlock.Question5 };
@@ -29,7 +38,8 @@ namespace Millionaire_Game
             TryAgain again = new TryAgain();
             Answer userChoice;
             for (int i = qNumber; i < arr.Length; i++)
-            {                
+            {
+                QuestionNumber = i;
                 Console.WriteLine(" ");
                 Console.WriteLine(arr[i].QText);
                 Console.WriteLine(" ");
@@ -37,7 +47,7 @@ namespace Millionaire_Game
                 Console.WriteLine("2. " + arr[i].Answers[1].AText);
                 Console.WriteLine("3. " + arr[i].Answers[2].AText);
                 Console.WriteLine("4. " + arr[i].Answers[3].AText);
-                Console.WriteLine(" ");                
+                Console.WriteLine(" ");
                 string userAnswer = input.ReceiveInput(InsideMap.FromGameEngine);
                 if (userAnswer == InsideMap.AnswerOne)
                 {
@@ -137,9 +147,8 @@ namespace Millionaire_Game
                     break;
                 }
                 else if (string.Equals(userAnswer, InsideMap.SaveGame, StringComparison.OrdinalIgnoreCase))
-                {
-                    user.FillUserDataArray(user.Name, user.Score, i);
-                    Save.SaveFile(user.Name);
+                {                    
+                    Save.SaveFile(Player.Name);
                     i--;
                     Console.WriteLine("Игра сохранена.\n Возвращаемся к последнему вопросу:");
                 }

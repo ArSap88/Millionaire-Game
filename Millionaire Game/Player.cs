@@ -4,9 +4,9 @@ namespace Millionaire_Game
 {
     class Player
     {
-        internal string Name { get; set; }        
+        internal static string Name { get; set; }        
         internal int Score { get; set; }
-        internal static string[] UserData = new string[3];
+        //internal static string[] UserData = new string[3];
         internal void ScoreMult()
         {
             Score *= 2;
@@ -30,15 +30,6 @@ namespace Millionaire_Game
         internal void PlayerWin()
         {
             Console.WriteLine("Вы выиграли: {0} руб\n До новых встреч!", Score);
-        }
-        internal void FillUserDataArray(string userName, int uScore, int qNum)
-        {
-            string userScore = Convert.ToString(uScore);
-            string qNumber = Convert.ToString(qNum);
-            UserData[0] = userName;
-            UserData[1] = userScore;
-            UserData[2] = qNumber;
-        }
-
+        }        
     }
 }

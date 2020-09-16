@@ -17,11 +17,9 @@ namespace Millionaire_Game
             }
             FileStream saveDataStream = userSave.OpenWrite();
             StreamWriter myStream = new StreamWriter(saveDataStream, Encoding.Default);
-            myStream.WriteLine(Player.UserData[0]);
-            myStream.WriteLine(Player.UserData[1]);
-            myStream.WriteLine(Player.UserData[2]);
-            myStream.Dispose();
-            //File.WriteAllLines(savePath, Player.UserData, Encoding.Default);
+            myStream.WriteLine(Player.Name);
+            myStream.WriteLine(MainGame.QuestionNumber);            
+            myStream.Dispose();            
         }
     }
 }

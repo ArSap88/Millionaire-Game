@@ -11,13 +11,13 @@ namespace Millionaire_Game
         private static  void AskFileName()
         {
             Console.WriteLine(" ");
-            Console.WriteLine("Пожалуйста, введите имя файла без <.mil>:");
+            Console.WriteLine("Пожалуйста, введите имя файла с расширением:");
             string fileName = Console.ReadLine();
             LoadGame(fileName);
         }
         internal static void LoadGame(string fileName)
         {
-            string filePath = Path.Combine(MainGame.SaveLocation, fileName, ".mil"); //
+            string filePath = Path.Combine(MainGame.SaveLocation, fileName); //, ".mil" Не понимаю почему перестала работать эта строка. Если вернуть .mil перестает работать.
             FileInfo dataFile = new FileInfo(filePath);            
             if (!dataFile.Exists)
             {                
@@ -36,11 +36,10 @@ namespace Millionaire_Game
                 }                
             }            
             string[] userData = File.ReadAllLines(filePath, Encoding.Default);
-            string userName = userData[0];
-            int score = Convert.ToInt32(userData[1]);
-            int qNum = Convert.ToInt32(userData[2]);
+            string userName = userData[0];            
+            int qNum = Convert.ToInt32(userData[1]);
             MainGame continueGame = new MainGame();
-            continueGame.GameEngine(userName, score, qNum);
+            continueGame.GameEngine(userName, qNum);
         }
         internal static void AskToLoad()
         {
