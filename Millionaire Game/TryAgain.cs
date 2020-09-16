@@ -6,7 +6,7 @@ namespace Millionaire_Game
 {
     class TryAgain
     {
-        internal void Again()
+        internal static void Again()
         {
             Console.WriteLine(" ");
             Console.WriteLine("Вы можете загрузить сохраненную игру, начать новую игру или выйти из игры.\n <Загрузить> | <Новая> | <Выйти>");

@@ -16,16 +16,15 @@ namespace Millionaire_Game
             GameEngine(userName, initialQuestion);
         }
         internal void GameEngine(string userName, int qNumber)
-        {            
-            Player user = new Player();
+        {
             Player.Name = userName;
-            user.Score = 50;
+            Player.Score = 50;
             if (qNumber > 0)
             {
                 int smth = 1;
                 while (smth < qNumber)
                 {
-                    user.ScoreMult();
+                    Player.ScoreMult();
                     smth++;
                 }
             }
@@ -37,6 +36,7 @@ namespace Millionaire_Game
             UserInput input = new UserInput();
             TryAgain again = new TryAgain();
             Answer userChoice;
+            bool stopCycle;
             for (int i = qNumber; i < arr.Length; i++)
             {
                 QuestionNumber = i;
@@ -52,98 +52,46 @@ namespace Millionaire_Game
                 if (userAnswer == InsideMap.AnswerOne)
                 {
                     userChoice = arr[i].Answers[0];
-                    userChoice.Choice();
-                    if (userChoice is AnswerCorrect)
+                    stopCycle = ChkUserAnswer(userChoice, i, arr.Length);
+                    if  (stopCycle)
                     {
-                        user.ScoreMult();
-                        if (i == arr.Length - 1)
-                        {
-                            Console.WriteLine("Поздравляем, Вы ответили на все вопросы!");
-                            user.PlayerWin();                            
-                            break;
-                        }
-                        Console.WriteLine("Ваш выигрыш: {0}", user.Score);                        
-                    }
-                    else
-                    {
-                        user.ScoreZero(InsideMap.UserLost);
-                        again.Again();
                         break;
                     }
                 }
                 else if (userAnswer == InsideMap.AnswerTwo)
                 {
                     userChoice = arr[i].Answers[1];
-                    userChoice.Choice();
-                    if (userChoice is AnswerCorrect)
+                    stopCycle = ChkUserAnswer(userChoice, i, arr.Length);
+                    if (stopCycle)
                     {
-                        user.ScoreMult();
-                        if (i == arr.Length - 1)
-                        {
-                            Console.WriteLine("Поздравляем, Вы ответили на все вопросы!");
-                            user.PlayerWin();                            
-                            break;
-                        }
-                        Console.WriteLine("Ваш выигрыш: {0}", user.Score);                        
-                    }
-                    else
-                    {
-                        user.ScoreZero(InsideMap.UserLost);
-                        again.Again();
                         break;
                     }
                 }
                 else if (userAnswer == InsideMap.AnswerThree)
                 {
                     userChoice = arr[i].Answers[2];
-                    userChoice.Choice();
-                    if (userChoice is AnswerCorrect)
+                    stopCycle = ChkUserAnswer(userChoice, i, arr.Length);
+                    if (stopCycle)
                     {
-                        user.ScoreMult();
-                        if (i == arr.Length - 1)
-                        {
-                            Console.WriteLine("Поздравляем, Вы ответили на все вопросы!");
-                            user.PlayerWin();                            
-                            break;
-                        }
-                        Console.WriteLine("Ваш выигрыш: {0}", user.Score);                        
-                    }
-                    else
-                    {
-                        user.ScoreZero(InsideMap.UserLost);                        
-                        again.Again();
                         break;
                     }
                 }
                 else if (userAnswer == InsideMap.AnswerFour)
                 {
                     userChoice = arr[i].Answers[3];
-                    userChoice.Choice();
-                    if (userChoice is AnswerCorrect)
+                    stopCycle = ChkUserAnswer(userChoice, i, arr.Length);
+                    if (stopCycle)
                     {
-                        user.ScoreMult();
-                        if (i == arr.Length - 1)
-                        {
-                            Console.WriteLine("Поздравляем, Вы ответили на все вопросы!");
-                            user.PlayerWin();                            
-                            break;
-                        }
-                        Console.WriteLine("Ваш выигрыш: {0}", user.Score);                        
-                    }
-                    else
-                    {
-                        user.ScoreZero(InsideMap.UserLost);                        
-                        again.Again();
                         break;
-                    }
+                    }                    
                 }
                 else if (string.Equals(userAnswer, InsideMap.Money, StringComparison.OrdinalIgnoreCase))
                 {
                     if (i == 0)
                     {
-                        user.ScoreZero(InsideMap.Money);
+                        Player.ScoreZero(InsideMap.Money);
                     }
-                    user.PlayerWin();                    
+                    Player.PlayerWin();                    
                     break;
                 }
                 else if (string.Equals(userAnswer, InsideMap.SaveGame, StringComparison.OrdinalIgnoreCase))
@@ -152,6 +100,28 @@ namespace Millionaire_Game
                     i--;
                     Console.WriteLine("Игра сохранена.\n Возвращаемся к последнему вопросу:");
                 }
+            }
+        }
+        private bool ChkUserAnswer(Answer userChoice, int i, int arrLength)
+        {
+            userChoice.Choice();
+            if (userChoice is AnswerCorrect)
+            {
+                Player.ScoreMult();
+                if (i == arrLength - 1)
+                {
+                    Console.WriteLine("Поздравляем, Вы ответили на все вопросы!");
+                    Player.PlayerWin();
+                    return true;
+                }
+                Console.WriteLine("Ваш выигрыш: {0}", Player.Score);
+                return false;
+            }
+            else
+            {
+                Player.ScoreZero(InsideMap.UserLost);
+                TryAgain.Again();
+                return true;
             }
         }
     }

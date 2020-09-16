@@ -2,16 +2,15 @@
 
 namespace Millionaire_Game
 {
-    class Player
+    static class Player
     {
         internal static string Name { get; set; }        
-        internal int Score { get; set; }
-        //internal static string[] UserData = new string[3];
-        internal void ScoreMult()
+        internal static int Score { get; set; }        
+        internal static void ScoreMult()
         {
             Score *= 2;
         }
-        internal void ScoreZero(string reason)
+        internal static void ScoreZero(string reason)
         {
             Score = 0;
             if (reason == InsideMap.Money)
@@ -23,11 +22,11 @@ namespace Millionaire_Game
                 PlayerLost();
             }            
         }
-        private void PlayerLost()
+        private static void PlayerLost()
         {
             Console.WriteLine("Вы проиграли. Ваш выигрыш: {0} ", Score);
         }
-        internal void PlayerWin()
+        internal static void PlayerWin()
         {
             Console.WriteLine("Вы выиграли: {0} руб\n До новых встреч!", Score);
         }        
