@@ -41,8 +41,7 @@ namespace Millionaire_Game
             }
             else if (string.Equals(userInput, InsideMap.LoadGame, StringComparison.OrdinalIgnoreCase))
             {
-                Load loadGame = new Load();
-                loadGame.AskToLoad();
+                Load.AskToLoad();
             }
         }
         private void FromGameInit(string userInput)
@@ -91,8 +90,7 @@ namespace Millionaire_Game
             }
             else if (string.Equals(userInput, InsideMap.LoadGame, StringComparison.OrdinalIgnoreCase))
             {
-                Load loadFile = new Load();
-                loadFile.AskToLoad();
+                Load.AskToLoad();
             }
             else if (string.Equals(userInput, InsideMap.Quit, StringComparison.OrdinalIgnoreCase))
             {
@@ -110,8 +108,7 @@ namespace Millionaire_Game
         {
             if (string.Equals(userInput, InsideMap.Yes, StringComparison.OrdinalIgnoreCase))
             {
-                Load load = new Load();
-                load.LoadGame(userName);
+                Load.AskToLoad();
             }
             if (string.Equals(userInput, InsideMap.No, StringComparison.OrdinalIgnoreCase))
             {

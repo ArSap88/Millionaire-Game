@@ -139,8 +139,7 @@ namespace Millionaire_Game
                 else if (string.Equals(userAnswer, InsideMap.SaveGame, StringComparison.OrdinalIgnoreCase))
                 {
                     user.FillUserDataArray(user.Name, user.Score, i);
-                    Save save = new Save();
-                    save.SaveFile(user.Name);
+                    Save.SaveFile(user.Name);
                     i--;
                     Console.WriteLine("Игра сохранена.\n Возвращаемся к последнему вопросу:");
                 }

@@ -4,18 +4,18 @@ using System.Text;
 
 namespace Millionaire_Game
 {    
-    class Load
+    static class Load
     {        
         internal static string UserFileName { get; private set; }
-        private int Count = 4;
-        private void AskFileName()
+        private static int Count = 4;
+        private static  void AskFileName()
         {
             Console.WriteLine(" ");
             Console.WriteLine("Пожалуйста, введите имя файла без <.mil>:");
             string fileName = Console.ReadLine();
             LoadGame(fileName);
         }
-        internal void LoadGame(string fileName)
+        internal static void LoadGame(string fileName)
         {
             string filePath = Path.Combine(MainGame.SaveLocation, fileName, ".mil"); //
             FileInfo dataFile = new FileInfo(filePath);            
@@ -42,7 +42,7 @@ namespace Millionaire_Game
             MainGame continueGame = new MainGame();
             continueGame.GameEngine(userName, score, qNum);
         }
-        internal void AskToLoad()
+        internal static void AskToLoad()
         {
             DirectoryInfo gameSaveFolder = new DirectoryInfo(MainGame.SaveLocation);
             FileInfo[] saveFiles = gameSaveFolder.GetFiles();

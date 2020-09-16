@@ -5,9 +5,9 @@ using System.IO;
 
 namespace Millionaire_Game
 {
-    class Save
+    static class Save
     {        
-        internal void SaveFile(string userName)
+        internal static void SaveFile(string userName)
         {            
             string savePath = MainGame.SaveLocation + @"\" + userName + ".mil";
             FileInfo userSave = new FileInfo(savePath);
