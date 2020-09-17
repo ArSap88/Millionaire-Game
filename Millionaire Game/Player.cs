@@ -28,7 +28,7 @@ namespace Millionaire_Game
         }
         internal static void PlayerWin()
         {
-            Console.WriteLine("Вы выиграли: {0} руб\n До новых встреч!", Score);
+            Console.WriteLine("Вы выиграли: {0} руб{1} До новых встреч!", Score, Environment.NewLine);
         }        
     }
 }

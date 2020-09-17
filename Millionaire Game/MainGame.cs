@@ -9,7 +9,7 @@ namespace Millionaire_Game
         internal void GameInit(string userName)
         {
             Console.WriteLine(" ");            
-            Console.WriteLine("Хотите прочитать правила игры?\n <Да> | <Нет>");
+            Console.WriteLine("Хотите прочитать правила игры?{0} <Да> | <Нет>", Environment.NewLine);
             UserInput showRules = new UserInput();
             showRules.ReceiveInput(InsideMap.FromGameInit);            
             int initialQuestion = 0;
@@ -29,7 +29,7 @@ namespace Millionaire_Game
                 }
             }
             Console.WriteLine(" ");
-            Console.WriteLine("Ну что, {0}, готовы начать?\n Итак:", Player.Name);
+            Console.WriteLine("Ну что, {0}, готовы начать?{1} Итак:", Player.Name, Environment.NewLine);
             Database qBlock = new Database();
             qBlock.QandA();
             Question[] arr = new Question[5] { qBlock.Question1, qBlock.Question2, qBlock.Question3, qBlock.Question4, qBlock.Question5 };
@@ -98,7 +98,7 @@ namespace Millionaire_Game
                 {                    
                     Save.SaveFile(Player.Name);
                     i--;
-                    Console.WriteLine("Игра сохранена.\n Возвращаемся к последнему вопросу:");
+                    Console.WriteLine("Игра сохранена.{0} Возвращаемся к последнему вопросу:", Environment.NewLine);
                 }
             }
         }

@@ -31,7 +31,7 @@ namespace Millionaire_Game
                     }
                     Console.WriteLine(" ");
                     Count -= 1;
-                    Console.WriteLine("У Вас нет сохраненной игры с таким именем... Введите имя файла еще раз.\n Осталось попыток : {0}", Count);                    
+                    Console.WriteLine("У Вас нет сохраненной игры с таким именем... Введите имя файла еще раз.{0} Осталось попыток : {1}", Environment.NewLine, Count);                    
                     AskFileName();
                 }                
             }            
@@ -48,7 +48,7 @@ namespace Millionaire_Game
             Console.WriteLine("Найдено {0} файлов.", saveFiles.Length);
             foreach (FileInfo info in saveFiles)
             {
-                Console.WriteLine("\n Имя файла: {0}\n Дата: {1}", info.Name, info.CreationTime);
+                Console.WriteLine("{0} Имя файла: {1}{0} Дата: {2}", Environment.NewLine, info.Name, info.CreationTime);
             }
             AskFileName();
         }

@@ -57,10 +57,7 @@ namespace Millionaire_Game
             }            
             else
             {
-                UserInput newinput = new UserInput();
-                Error = InsideMap.FromGameInit;
-                Console.WriteLine("Возможно Вы ошиблись. Пожалуйста, повторите ввод:");
-                newinput.ReceiveInput(Error);
+                InputError(InsideMap.FromGameInit);
             }
         }
         private void FromGameEngine(string userInput)
@@ -76,10 +73,7 @@ namespace Millionaire_Game
             }
             else
             {
-                UserInput newinput = new UserInput();
-                Error = InsideMap.FromGameEngine;
-                Console.WriteLine("Возможно Вы ошиблись. Пожалуйста, повторите ввод:");
-                newinput.ReceiveInput(Error);
+                InputError(InsideMap.FromGameEngine);
             }
         }
         private void FromTryAgain(string userInput)
@@ -98,10 +92,7 @@ namespace Millionaire_Game
             }
             else
             {
-                UserInput newinput = new UserInput();
-                Error = InsideMap.TryAgain;
-                Console.WriteLine("Возможно Вы ошиблись. Пожалуйста, повторите ввод:");
-                newinput.ReceiveInput(Error);
+                InputError(InsideMap.TryAgain);
             }
         }
         private void FromLoad(string userInput, string userName)
@@ -115,6 +106,12 @@ namespace Millionaire_Game
                 MainGame start = new MainGame();
                 start.GameInit(userName);
             }
+        }
+        private void InputError(string from)
+        {
+            UserInput newinput = new UserInput();
+            Console.WriteLine("Возможно Вы ошиблись. Пожалуйста, повторите ввод:");
+            newinput.ReceiveInput(from);
         }
     }    
 }

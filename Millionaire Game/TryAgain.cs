@@ -9,7 +9,7 @@ namespace Millionaire_Game
         internal static void Again()
         {
             Console.WriteLine(" ");
-            Console.WriteLine("Вы можете загрузить сохраненную игру, начать новую игру или выйти из игры.\n <Загрузить> | <Новая> | <Выйти>");
+            Console.WriteLine("Вы можете загрузить сохраненную игру, начать новую игру или выйти из игры.{0} <Загрузить> | <Новая> | <Выйти>", Environment.NewLine);
             UserInput input = new UserInput();
             input.ReceiveInput(InsideMap.TryAgain);
         }
